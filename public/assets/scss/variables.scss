@@ -1,0 +1,14 @@
+$main-color: #fff;
+$background-color-dark: rgba(0,0,0,0.15);
+$background-color: rgba(255,255,255,0.2);
+
+$modal-color: #000;
+
+$form-border-color: #999;
+$form-border-color-active: $modal-color;
+
+$primary-color: #41b883;
+$primary-color-hover: lighten($primary-color, 20%);
+
+$signal: #cb1111;
+$signal-hover: darken($signal, 20%);

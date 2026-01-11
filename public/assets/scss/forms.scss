@@ -1,0 +1,49 @@
+fieldset {
+    padding: 35px 15px 15px 15px;
+    margin-bottom: 15px;
+    border: 1px solid $form-border-color;
+}
+
+.input-wrapper {
+    display: block;
+    margin-bottom: 15px;
+    position: relative;
+
+    input,
+    textarea {
+        padding: 10px;
+        border: 1px solid $form-border-color;
+        color: $modal-color;
+        border-radius: 0;
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 16px;
+
+        &:focus {
+            outline: none;
+            border-color: $form-border-color-active;
+        }
+    }
+    label {
+        position: absolute;
+        bottom: -5px;
+        left: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+        background-color: $main-color;
+        font-size: 10px;
+    }
+
+    textarea {
+        + label {
+            bottom: -2px;
+        }
+    }
+}
+.button_wrapper {
+    display: block;
+    margin-bottom: 15px;
+    position: relative;
+}
