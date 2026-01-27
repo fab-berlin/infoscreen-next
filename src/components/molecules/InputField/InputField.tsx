@@ -16,7 +16,7 @@ const InputField = ({ value, label, disabled, onChange }: InputFieldProps) => {
         type="text"
         value={value ?? ''}
         readOnly={disabled}
-        className="border border-gray-600 bg-gray-50 px-4 py-2 text-gray-800"
+        className="rounded-lg border border-gray-600 bg-gray-50 px-4 py-2 text-gray-800"
         onChange={onChange}
       />
     </div>
