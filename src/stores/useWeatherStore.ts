@@ -1,9 +1,9 @@
 import { create } from "zustand"
-import {OwmData, SensorData} from "@/types";
+import {OwmData, WeatherSensorData} from "@/types";
 
 // Types
 interface WeatherState {
-  sensorData: SensorData[]
+  sensorData: WeatherSensorData[]
   owmData: OwmData
   outsideSensorData: Record<string, any>
   updateTime: string | null

@@ -1,7 +1,8 @@
 import { create } from "zustand"
+import {SensorListItem} from "@/types";
 
 interface SensorsState {
-  sensorsList: any[]
+  sensorsList: SensorListItem[]
   loadSensorsList: () => Promise<any>
   saveSensor: (uid: string) => Promise<any>
 }
@@ -13,7 +14,7 @@ export const useSensorsStore = create<SensorsState>((set, get) => ({
 
   loadSensorsList: async () => {
     const response = await fetch(getBaseUri() + "sensors/read.php")
-    const data = await response.json()
+    const data: SensorListItem[] = await response.json()
 
     const sortedData = data.sort((a: any, b: any) => Number.parseInt(a.sort_order) - Number.parseInt(b.sort_order))
 
