@@ -7,8 +7,8 @@ import * as Dialog from '@radix-ui/react-dialog';
 import type { SensorListItem } from '@/types';
 import InputField from '@/components/molecules/InputField/InputField';
 import Button from '@/components/atoms/Button/Button';
-import SensorListItemCard from '@/components/molecules/SensorListItemCard/SensorListItemCard';
 import SelectField from '@/components/molecules/SelectField/SelectField';
+import SensorsListGrouped from '@/components/organisms/SensorsListGrouped/SensorsListGrouped';
 
 interface InputConfigItem {
   key: keyof SensorListItem;
@@ -23,6 +23,8 @@ const ConfigSensorsList = () => {
     saveSensorConfig,
     loadContextsList,
     deleteSensorEntry,
+    moveSensorEntryUp,
+    moveSensorEntryDown,
     sensorsList,
     contextsList,
   } = useSensorsConfigStore();
@@ -57,6 +59,13 @@ const ConfigSensorsList = () => {
       setIsDialogOpen(false);
     }
   };
+  const getNextSortOrder = () => {
+    if (sensorsList.length === 0) return 1;
+
+    const maxSortOrder = Math.max(...sensorsList.map((s) => s.sort_order ?? 0));
+
+    return maxSortOrder + 1;
+  };
   const addNewSensor = () => {
     const newSensorConfig: SensorListItem = {
       id: undefined,
@@ -64,7 +73,7 @@ const ConfigSensorsList = () => {
       ip: '',
       name: '',
       comment: '',
-      sort_order: 0,
+      sort_order: getNextSortOrder(),
       context: undefined,
     };
     setSelectedSensor(newSensorConfig);
@@ -84,21 +93,31 @@ const ConfigSensorsList = () => {
     setIsDeleteDialogOpen(false);
   };
 
+  const moveEntryUp = async (item: SensorListItem) => {
+    if (item.id) {
+      await moveSensorEntryUp(item.id);
+      await loadSensorsList();
+    }
+  };
+  const moveEntryDown = async (item: SensorListItem) => {
+    if (item.id) {
+      await moveSensorEntryDown(item.id);
+      await loadSensorsList();
+    }
+  };
+
   return (
     <section className="mb-4 border border-white p-4 text-white filter backdrop-blur-lg">
       <h2 className="mb-4 text-xl">Liste aller Sensoren</h2>
-      {sensorsList.map((item) => (
-        <SensorListItemCard
-          key={item.id}
-          uid={item.uid ?? ''}
-          name={item.name}
-          onEdit={() => {
-            setSelectedSensor(item);
-            setIsDialogOpen(true);
-          }}
-          onDelete={() => item.id && handleDeleteEntry(item)}
-        />
-      ))}
+      <SensorsListGrouped
+        onEdit={(item: SensorListItem) => {
+          setSelectedSensor(item);
+          setIsDialogOpen(true);
+        }}
+        onDelete={(item: SensorListItem) => item.id && handleDeleteEntry(item)}
+        onMoveUp={(item: SensorListItem) => item.id && moveEntryUp(item)}
+        onMoveDown={(item: SensorListItem) => item.id && moveEntryDown(item)}
+      />
       <Button
         variant={'primary'}
         onClick={addNewSensor}

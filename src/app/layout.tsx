@@ -34,7 +34,7 @@ export default function RootLayout({
               alt={'Background Image'}
               width={1920}
               height={1080}
-              className={'absolute size-full object-cover'}
+              className={'absolute size-full object-cover brightness-50'}
             />
           </section>
 
